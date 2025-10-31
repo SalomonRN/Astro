@@ -1,14 +1,11 @@
 ---
-import FastAPILogo from "@/assets/Fastapi.svg";
-import PythonLogo from "@/assets/Python.svg";
-import PostgresSQLLogo from "@/assets/PostgresSQL.svg";
-import RedisLogo from "@/assets/Redis.svg";
-import AstroLogo from "@/assets/Astro.svg";
-import TailwindLogo from "@/assets/Tailwind.svg";
----
-<main class="flex flex-col bg-[#253c47] text-[#b9e9fe] h-full">
 
-  <section class="flex flex-col md:flex-row items-center justify-between gap-10 px-10 py-16 flex-1">
+---
+
+<main class="flex flex-col bg-[#253c47] text-[#b9e9fe] h-full">
+  <section
+    class="flex flex-col md:flex-row items-center justify-between gap-10 px-10 py-16 flex-1"
+  >
     <img
       class="w-60 md:w-80"
       src="/src/assets/main-logo.png"
@@ -24,42 +21,48 @@ import TailwindLogo from "@/assets/Tailwind.svg";
     </p>
   </section>
 
-    <div class="grid grid-cols-3 justify-items-center md:flex md:justify-center items-center pt-10 gap-8 px-10 bg-[#2f4b5a] ">
-      <a
-        class="w-16 hover:scale-115 transition-transform"
-        href="https://www.python.org/"
-      >
-        <PythonLogo class="w-15 md:w-20 h-auto" />
-      </a>
-      <a
-        class="w-16 hover:scale-115 transition-transform"
-        href="https://fastapi.tiangolo.com/"
-      >
-        <FastAPILogo class="w-15 md:w-20 h-auto" />
-      </a>
-      <a
-        class="w-16 hover:scale-115 transition-transform"
-        href="https://www.postgresql.org/"
-      >
-        <PostgresSQLLogo class="w-15 md:w-20 h-auto" />
-      </a>
-      <a class="w-16 hover:scale-115 transition-transform" href="https://redis.io/">
-        <RedisLogo class="w-15 md:w-20 h-auto" />
-      </a>
-      <a
-        class="w-16 hover:scale-115 transition-transform"
-        href="https://astro.build/"
-      >
-        <AstroLogo class="w-15 md:w-20 h-auto" />
-      </a>
-      <a
-        class="w-16 hover:scale-115 transition-transform"
-        href="https://tailwindcss.com/"
-      >
-        <TailwindLogo class="w-15 md:w-20 h-auto" />
-      </a>
-    </div>
+  <div
+    class="grid grid-cols-3 justify-items-center md:flex md:justify-center items-center pt-10 gap-8 px-10 bg-[#2f4b5a]"
+  >
+    <!-- "w-15 md:w-20 h-auto" -->
 
+    <a
+      class="w-16 hover:scale-115 transition-transform"
+      href="https://www.python.org/"
+    >
+      <img src="svg/Python.svg" class="w-15 md:w-20 h-auto" />
+    </a>
+    <a
+      class="w-16 hover:scale-115 transition-transform"
+      href="https://fastapi.tiangolo.com/"
+    >
+      <img src="svg/Fastapi.svg" class="w-15 md:w-20 h-auto" />
+    </a>
+    <a
+      class="w-16 hover:scale-115 transition-transform"
+      href="https://www.postgresql.org/"
+    >
+      <img src="svg/PostgreSQL.svg" class="w-15 md:w-20 h-auto" />
+    </a>
+    <a
+      class="w-16 hover:scale-115 transition-transform"
+      href="https://redis.io/"
+    >
+      <img src="svg/Redis.svg" class="w-15 md:w-20 h-auto" />
+    </a>
+    <a
+      class="w-16 hover:scale-115 transition-transform"
+      href="https://astro.build/"
+    >
+      <img src="svg/AstroLogo.svg" class="w-15 md:w-20 h-auto" />
+    </a>
+    <a
+      class="w-16 hover:scale-115 transition-transform"
+      href="https://tailwindcss.com/"
+    >
+      <img src="svg/Tailwind.svg" class="w-15 md:w-20 h-auto" />
+    </a>
+  </div>
 
   <footer class="bg-[#2f4b5a] text-center py-4">
     <a href="https://techicons.dev/">
