@@ -1,0 +1,29 @@
+---
+import { URL } from "@/consts/consts";
+import Layout from "@/layouts/Layout.astro";
+const { id } = Astro.params;
+export const prerender = false
+
+const res = await fetch(`${URL}/url/${id}`, {
+  redirect: "manual",
+});
+
+if (res.status >= 300 && res.status < 400)  {
+  const location = res.headers.get("Location");
+
+  if (location) {
+
+    return Astro.redirect(location);
+  }
+} else {
+  // 
+  console.log("NO DEBERIA");
+}
+---
+
+
+<Layout title="Not found">
+  <section class="flex flex-1 flex-col items-center justify-center content-center h-full">
+    <h2>La url no existe :/</h2>
+  </section>
+</Layout>

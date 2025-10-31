@@ -1,0 +1,135 @@
+---
+export const prerender = false;
+---
+
+<section class="flex flex-col align-middle items-center mt-50 text-[#1b2931]">
+  <form
+    method=""
+    action=""
+    id="shorten-form"
+    class="bg-white p-6 rounded-xl shadow-md w-full max-w-md"
+  >
+    <label for="url" class="block mb-2 font-semibold">Pega tu enlace:</label>
+    <input
+      id="url"
+      name="large_url"
+      type="url"
+      required
+      class="border rounded-md w-full p-2 mb-4"
+      placeholder="https://google.com"
+    />
+    <button
+      type="submit"
+      class="bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-700 w-full"
+    >
+      Crear link
+    </button>
+  </form>
+  <button
+    id="url-response"
+    class="hidden group items-center justify-center relative group w-60 h-20 mt-10 bg-[#21c221] pl-8 pr-8 py-4 rounded-3xl hover:scale-105 transition-transform"
+  >
+    <svg
+      class="inline-flex group-hover:rotate-4"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="icon icon-tabler icons-tabler-outline icon-tabler-clipboard"
+      ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+        d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"
+      ></path><path
+        d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"
+      ></path>
+    </svg>
+    Copia tu link
+  </button>
+</section>
+
+<script>
+  import { URL } from "@/consts/consts";
+
+  const form = document.querySelector("#shorten-form") as HTMLFormElement;
+  const copyButton = document.querySelector(
+    "#url-response"
+  ) as HTMLButtonElement;
+
+  let shortUrl = "";
+
+  // Copiar texto al portapapeles
+  async function copyToClipboard(text: string) {
+    try {
+      const clipboardItem = new ClipboardItem({
+        "text/plain": new Blob([text], { type: "text/plain" }),
+      });
+      await navigator.clipboard.write([clipboardItem]);
+      alert("Link copiado 😄");
+    } catch (err) {
+      // COLOCAR UN HTML PARA QUE LO COPIE EL USUARIO
+      console.error("Error al copiar:", err);
+      alert("No se pudo copiar el link 😞");
+    }
+  }
+
+  // Petición al backend
+  async function shortenUrl(longUrl: string) {
+    try {
+      const res = await fetch(`${URL}/url`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ large_url: longUrl }),
+      });
+
+      if (res.status === 429) throw new Error("RATE_LIMIT");
+      if (!res.ok) throw new Error();
+
+      return await res.json();
+    } catch (error) {
+
+      if (error instanceof Error && error.message === "RATE_LIMIT") {
+        alert(
+          "Superaste las 5 peticiones por minuto. Inténtalo nuevamente más tarde."
+        );
+      } else {
+        alert("Algo salió mal. Inténtalo nuevamente más tarde.");
+      }
+      throw error;
+    }
+  }
+
+  // 🪄 Animación visual
+  function animateButton(button: HTMLButtonElement) {
+    button.style.transform = "scale(1.1)";
+    setTimeout(() => (button.style.transform = ""), 300);
+  }
+
+  // 📬 Manejo del formulario
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const longUrl = new FormData(form).get("large_url") as string;
+
+    try {
+      const data = await shortenUrl(longUrl);
+      shortUrl = `${URL}/url/${data.tiny_url}`;
+
+      copyButton.style.display = "flex";
+      animateButton(copyButton);
+    } catch {
+      // el error ya fue manejado dentro de shortenUrl()
+    }
+  });
+
+  // 📎 Copiar resultado
+  copyButton.addEventListener("click", () => {
+    if (!shortUrl) {
+      alert("Primero genera una URL corta 😅");
+      return;
+    }
+    copyToClipboard(shortUrl);
+  });
+</script>
