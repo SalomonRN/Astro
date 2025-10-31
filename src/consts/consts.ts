@@ -1,2 +1,1 @@
-export const URL = "https://short-url-generator-zmts.onrender.com";
-// export const URL = "http://localhost:8000";
+export const URL = import.meta.env.PUBLIC_BACKEND_URL
